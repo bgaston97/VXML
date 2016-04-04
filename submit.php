@@ -1,9 +1,10 @@
 <?php
-header("Content-type: text/xml");
-echo("<?xml version=\"1.0\"?>\n");
+header ("Content-type: text/xml");
+echo "<?xml version=\"1.0\"?>\n";
 
-$phoneid = $_GET[phoneid];
 $formid = $_GET[formid];
+$phoneid = $_GET[phoneid];
+
 ?>
 
 <vxml version="2.0">

@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<vxml version="2.0">
+
+<form id="intro">
+     <block>
+          <prompt bargein="true">
+            
+               Hello! Welcome to the Arkansas Form Request system. 
+          </prompt>
+          <goto next="#mainmenu"/>
+     </block>
+</form>
+
+<menu id="mainmenu">
+     <prompt>
+          Press or say 1 to request a Form.  Press or say 2 to go to the Prior Authorization line
+          <enumerate/>
+     </prompt>
+     <choice dtmf="1" next="#formphone">
+          Sales</choice>
+     <choice dtmf="2" next="#priorauth">
+          Support</choice>
+     <choice dtmf="3" next="#directory">
+          Company Directory</choice>
+</menu>
+
+
+<form id="formphone">
+  <field name="id" type="digits?minlength=7;maxlength=10">
+    <prompt>
+      What Number would you like for Magellan to send the fax? Input between 7 and 10 digits
+    </prompt>
+    <filled>
+      <assign name="phoneid" expr="id"/>
+      You entered <value expr="id"/>.
+      asking you next about the form to send.
+    </filled>
+  </field>
+  <goto next="#formrequest"/>
+</form>
+
+<form id="formrequest">
+  <field name="id" type="digits">
+    <prompt bargein="true">
+      What form would you like for Magellan to send the fax? press or say 1 for Prior Auth, press or say 2 for Pricing, press or say 3 for Patient inquiry
+    </prompt>
+    <filled>
+      <assign name="formid" expr="id"/>
+      You entered <value expr="id"/>.
+      
+    </filled>
+  </field>
+  <block>
+    <prompt>
+      Please wait while we process your information.
+    </prompt>
+    <submit namelist="phoneid formid" next="submit.php"/>
+  </block>
+</form>
+
+<form id="priorauth">
+     <block>
+          Please hold for the next available sales representative.
+     </block>
+     <!-- transfer to sales -->
+     <transfer dest="+18045480252" connecttimeout="20s" bridge="true"/>
+</form>
+
+</vxml>
